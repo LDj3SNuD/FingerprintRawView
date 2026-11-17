@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="LibUsbDotNet" Version="3.0.224" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <Configurations>Release</Configurations>
+    <OutputType>Exe</OutputType>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>FingerprintRawView</RootNamespace>
+    <ImplicitUsings>false</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <TargetOS Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">windows</TargetOS>
+  </PropertyGroup>
+
+  <Target Name="CopyLibusb" AfterTargets="Build">
+    <!-- https://github.com/libusb/libusb/releases/download/v1.0.30/libusb-1.0.30.7z @ MinGW64\dll\libusb-1.0.dll (CRC32:B42143DB) -->
+    <Copy SourceFiles="lib\$(TargetOS)\libusb-1.0.dll" DestinationFolder="$(OutputPath)" ContinueOnError="false" />
+  </Target>
+
+</Project>
